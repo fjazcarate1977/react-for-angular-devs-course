@@ -2,6 +2,8 @@ interface HttpResponse<T> extends Response {
   parsedBody?: T;
 }
 
+const test = process.env.REACT_APP_TEST_ENVIROMENT === '1';
+
 const http = async <T>(request: RequestInfo): Promise<HttpResponse<T>> => {
   const response: HttpResponse<T> = await fetch(request);
 
@@ -11,9 +13,10 @@ const http = async <T>(request: RequestInfo): Promise<HttpResponse<T>> => {
     throw new Error(ex);
   }
 
-  if (!response.ok) {
+  if (!response.ok && !test) {
     throw new Error(response.statusText);
   }
+
   return response;
 };
 
@@ -31,7 +34,7 @@ export const del = async <T>(
   }
 ): Promise<HttpResponse<T>> => await http<T>(new Request(path, args));
 
-export async function put<T>(
+export const put = async <T>(
   path: string,
   body: any,
   args: RequestInit = {
@@ -41,6 +44,4 @@ export async function put<T>(
     },
     body: JSON.stringify(body)
   }
-): Promise<HttpResponse<T>> {
-  return await http<T>(new Request(path, args));
-}
+): Promise<HttpResponse<T>> => await http<T>(new Request(path, args));

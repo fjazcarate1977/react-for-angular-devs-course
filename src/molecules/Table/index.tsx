@@ -11,7 +11,7 @@ const Table: React.FC<TableProps> = ({
   movies,
   callbackMethod
 }: TableProps) => (
-  <table>
+  <table data-testid="summaryTable">
     <thead>
       <tr>
         <th scope="col">Title</th>
