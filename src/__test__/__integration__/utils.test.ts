@@ -14,6 +14,6 @@ test('Parse Movie Utility', () => {
 });
 
 test('Parse Movie Utility empty object', () => {
-  index = 25;
+  index = movies.length + 1;
   expect(parseMovie(movies, index)).toStrictEqual({});
 });
