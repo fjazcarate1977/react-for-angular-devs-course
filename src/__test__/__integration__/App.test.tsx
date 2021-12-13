@@ -2,7 +2,9 @@ import App from '../../App';
 
 import { render, waitFor, act, screen } from '@testing-library/react';
 
-import mockData from './mockData';
+import mockData from './db.json';
+
+const { movies } = mockData;
 
 describe('<Home />', () => {
   let originFetch: unknown;
@@ -14,7 +16,7 @@ describe('<Home />', () => {
   });
 
   it('Mixed Up, Shook Up Girl', async () => {
-    const fakeResponse = mockData;
+    const fakeResponse = movies;
     const mRes = { json: jest.fn().mockResolvedValueOnce(fakeResponse) };
     const mockedFetch = jest.fn().mockResolvedValueOnce(mRes as any);
     (global as any).fetch = mockedFetch;
