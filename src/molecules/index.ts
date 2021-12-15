@@ -1,3 +1,3 @@
-import InputStyed from './InputText';
+import InputText from './InputText';
 
-export { InputStyed };
+export { InputText };

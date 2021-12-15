@@ -67,20 +67,20 @@ const App: React.FC = () => {
     setState(updateState);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.info(state, 'great Franky');
+  };
+
   return (
     <div className="main-block">
       <h1>Registration</h1>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          console.info(state, 'great Franky');
-        }}
-      >
+      <form onSubmit={(e) => handleSubmit(e)}>
         <hr />
         {FormFieldArray.map(
           (data, idx) =>
             (data.type === 'text' || data.type === 'password') && (
-              <Molecules.InputStyed
+              <Molecules.InputText
                 key={idx}
                 {...data}
                 handleInput={(e) => handleInputCallback(e, data.name)}
@@ -88,20 +88,14 @@ const App: React.FC = () => {
                 {state[idx]?.error && (
                   <span className="error-message">{data.errormessage}</span>
                 )}
-              </Molecules.InputStyed>
+              </Molecules.InputText>
             )
         )}
 
         <hr />
-        <div className="gender">
-          <input type="radio" value="none" id="male" name="gender" checked />
-          <label htmlFor="male" className="radio">
-            Male
-          </label>
-          <input type="radio" value="none" id="female" name="gender" />
-          <label htmlFor="female" className="radio">
-            Female
-          </label>
+        <div className="form-group">
+          <input type="checkbox" id="html" />
+          <label htmlFor="html">I Agree to Privacy Policy</label>
         </div>
         <hr />
         <div className="btn-block">

@@ -1,17 +1,17 @@
 import React from 'react';
 
-interface InputStyledProps {
+interface InputTextProps {
   icon: string;
   handleInput: React.ChangeEventHandler<HTMLInputElement>;
   children: React.ReactNode;
 }
 
-const InputStyled: React.FC<InputStyledProps> = ({
+const InputText: React.FC<InputTextProps> = ({
   handleInput,
   icon,
   children,
   ...props
-}: InputStyledProps) => (
+}: InputTextProps) => (
   <>
     <label id="icon">
       <i className={`fas fa-${icon}`}></i>
@@ -21,4 +21,4 @@ const InputStyled: React.FC<InputStyledProps> = ({
   </>
 );
 
-export default InputStyled;
+export default InputText;
