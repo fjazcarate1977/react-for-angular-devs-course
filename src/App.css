@@ -133,6 +133,10 @@ button:hover {
   background: #26a9e0;
 }
 
+button:disabled {
+  opacity: 0.5;
+}
+
 .form-group {
   display: block;
   margin-bottom: 15px;
