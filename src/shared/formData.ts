@@ -4,26 +4,33 @@ import * as Validation from './regex';
 export const FormFieldArray: FormFieldProps[] = [
   {
     icon: 'envelope',
-    errormessage: 'Email error format validation',
     placeholder: 'Email',
     type: 'text',
     name: 'email',
-    validation: Validation.MailVal
+    error: {
+      validation: Validation.MailVal,
+      errormessage: 'Email error format validation'
+    }
   },
   {
     icon: 'user',
-    errormessage: 'Name error format validation',
     placeholder: 'Name',
     type: 'text',
     name: 'name',
-    validation: Validation.NameVal
+    error: {
+      validation: Validation.NameVal,
+      errormessage: 'Name error format validation'
+    }
   },
   {
     icon: 'user',
-    errormessage: 'Password error format validation',
+
     placeholder: 'Password',
     type: 'password',
     name: 'password',
-    validation: Validation.PasswordVal
+    error: {
+      validation: Validation.PasswordVal,
+      errormessage: 'Password error format validation'
+    }
   }
 ];

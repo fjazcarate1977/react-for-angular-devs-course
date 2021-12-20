@@ -45,7 +45,7 @@ const RegistrationForm: React.FC = () => {
     e.preventDefault();
     const updateState = state.map((data, idx) => ({
       ...data,
-      error: !FormFieldArray[idx].validation.test(data.value)
+      error: !FormFieldArray[idx].error.validation.test(data.value)
     }));
 
     setState(updateState);
@@ -59,26 +59,33 @@ const RegistrationForm: React.FC = () => {
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <hr />
-      {FormFieldArray.map(
-        (data, idx) =>
-          (data.type === 'text' || data.type === 'password') && (
-            <Atoms.InputText
-              key={idx}
-              {...data}
-              handleInput={(e) => handleInputCallback(e, data.name)}
-            >
-              {state[idx]?.error && (
-                <span className="error-message">{data.errormessage}</span>
-              )}
-            </Atoms.InputText>
-          )
-      )}
+      {FormFieldArray.map((data, idx) => (
+        <Atoms.InputText
+          key={idx}
+          {...data}
+          handleInput={(e) => handleInputCallback(e, data.name)}
+          data-testid={`testid-${data.name}`}
+        >
+          {state[idx]?.error && (
+            <span data-testid="testid-error-messages" className="error-message">
+              {data.error.errormessage}
+            </span>
+          )}
+        </Atoms.InputText>
+      ))}
 
       <hr />
-      <Atoms.InputCheckbox handleInput={(e) => handleCheckboxCallback(e)} />
+      <Atoms.InputCheckbox
+        data-testid="testid-checkbox-button"
+        handleInput={(e) => handleCheckboxCallback(e)}
+      />
       <hr />
       <div className="btn-block">
-        <button disabled={!submitState} type="submit">
+        <button
+          data-testid="testid-submit-button"
+          disabled={!submitState}
+          type="submit"
+        >
           Submit
         </button>
       </div>
