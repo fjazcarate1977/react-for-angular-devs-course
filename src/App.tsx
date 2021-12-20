@@ -1,15 +1,9 @@
-import React, { HTMLInputTypeAttribute, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
-import * as Molecules from './molecules';
+import * as Atoms from './atoms';
 
-interface FormFieldProps {
-  icon: string;
-  errormessage: string;
-  placeholder: string;
-  type: HTMLInputTypeAttribute;
-  name: string;
-}
+import { FormFieldArray } from './shared/formData';
 
 interface FormFieldStateProps {
   value: string;
@@ -17,32 +11,9 @@ interface FormFieldStateProps {
   error: boolean;
 }
 
-const FormFieldArray: FormFieldProps[] = [
-  {
-    icon: 'envelope',
-    errormessage: 'Email error format validation',
-    placeholder: 'Email',
-    type: 'text',
-    name: 'email'
-  },
-  {
-    icon: 'user',
-    errormessage: 'Name error format validation',
-    placeholder: 'Name',
-    type: 'text',
-    name: 'name'
-  },
-  {
-    icon: 'user',
-    errormessage: 'Password error format validation',
-    placeholder: 'Password',
-    type: 'password',
-    name: 'password'
-  }
-];
-
 const App: React.FC = () => {
   const [state, setState] = useState<FormFieldStateProps[]>([]);
+  const [submitState, setSubmitState] = useState(false);
 
   useEffect(() => {
     const initalFormSate = FormFieldArray.reduce<FormFieldStateProps[]>(
@@ -67,9 +38,23 @@ const App: React.FC = () => {
     setState(updateState);
   };
 
+  const handleCheckboxCallback = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSubmitState(e.target.checked);
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.info(state, 'great Franky');
+    const updateState = state.map((data, idx) => ({
+      ...data,
+      error: !FormFieldArray[idx].validation.test(data.value)
+    }));
+
+    setState(updateState);
+
+    const passValidation = !updateState.some((data) => data.error);
+    if (passValidation) {
+      alert('Code Challenge completed');
+    }
   };
 
   return (
@@ -80,7 +65,7 @@ const App: React.FC = () => {
         {FormFieldArray.map(
           (data, idx) =>
             (data.type === 'text' || data.type === 'password') && (
-              <Molecules.InputText
+              <Atoms.InputText
                 key={idx}
                 {...data}
                 handleInput={(e) => handleInputCallback(e, data.name)}
@@ -88,18 +73,17 @@ const App: React.FC = () => {
                 {state[idx]?.error && (
                   <span className="error-message">{data.errormessage}</span>
                 )}
-              </Molecules.InputText>
+              </Atoms.InputText>
             )
         )}
 
         <hr />
-        <div className="form-group">
-          <input type="checkbox" id="html" />
-          <label htmlFor="html">I Agree to Privacy Policy</label>
-        </div>
+        <Atoms.InputCheckbox handleInput={(e) => handleCheckboxCallback(e)} />
         <hr />
         <div className="btn-block">
-          <button type="submit">Submit</button>
+          <button disabled={!submitState} type="submit">
+            Submit
+          </button>
         </div>
       </form>
     </div>
