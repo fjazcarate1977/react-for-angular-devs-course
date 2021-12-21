@@ -15,7 +15,7 @@ const RegistrationForm: React.FC = () => {
   const [submitState, setSubmitState] = useState(false);
 
   useEffect(() => {
-    const initalFormSate = FormFieldArray.reduce<FormFieldStateProps[]>(
+    const initalFormState = FormFieldArray.reduce<FormFieldStateProps[]>(
       (previousValue, currentValue) =>
         previousValue.concat({
           name: currentValue.name,
@@ -24,7 +24,7 @@ const RegistrationForm: React.FC = () => {
         }),
       []
     );
-    setState(initalFormSate);
+    setState(initalFormState);
   }, []);
 
   const handleInputCallback = (
