@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { FormFieldProps } from '../../shared/types';
+
 interface InputTextProps {
   icon: string;
   handleInput: React.ChangeEventHandler<HTMLInputElement>;
@@ -11,14 +13,17 @@ const InputText: React.FC<InputTextProps> = ({
   icon,
   children,
   ...props
-}: InputTextProps) => (
-  <>
-    <label id="icon">
-      <i className={`fas fa-${icon}`}></i>
-    </label>
-    <input {...props} onChange={(e) => handleInput(e)} />
-    {children}
-  </>
-);
+}: InputTextProps) => {
+  const { error, ...noErrorProps } = props as FormFieldProps;
+  return (
+    <>
+      <label id="icon">
+        <i className={`fas fa-${icon}`}></i>
+      </label>
+      <input {...noErrorProps} onChange={(e) => handleInput(e)} />
+      {children}
+    </>
+  );
+};
 
 export default InputText;
