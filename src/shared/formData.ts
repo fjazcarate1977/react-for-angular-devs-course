@@ -24,7 +24,6 @@ export const FormFieldArray: FormFieldProps[] = [
   },
   {
     icon: 'user',
-
     placeholder: 'Password',
     type: 'password',
     name: 'password',
